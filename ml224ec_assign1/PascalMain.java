@@ -1,13 +1,26 @@
 package ml224ec_assign1;
 
+import java.util.Scanner;
+
 public class PascalMain {
-	
-	private static final int PASCAL_ROW = 4;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		int[] pascal = pascalRow(8);
+		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Pascal Triangle");
+		System.out.print("Select row to calculate (positive integer): ");
+		int in = input.nextInt();
+		
+		input.close();
+		
+		if (in < 0)
+			return;
+		
+		// end input
+		
+		int[] pascal = pascalRow(in);
 		
 		int len = pascal.length;
 		

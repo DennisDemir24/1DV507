@@ -2,14 +2,18 @@ package ml224ec_assign2;
 
 import java.util.Iterator;
 
+import ml224ec_assign2.queue.ArrayQueue;
 import ml224ec_assign2.queue.LinkedQueue;
 import ml224ec_assign2.queue.Queue;
 
 public class QueueMain {
 	
+	private static final boolean DEBUG = true;
+	private static final boolean USE_ARRAY = false;
+	
 	public static void main(String[] args) {
 
-		Queue queue = new LinkedQueue();
+		Queue queue = (USE_ARRAY ? new ArrayQueue() : new LinkedQueue());
 		
 		queue.enqueue(400);
 		queue.enqueue("Hello world!");
@@ -34,6 +38,43 @@ public class QueueMain {
 		queue.enqueue(40000);
 		
 		System.out.printf("\nThree elements (200, 3000, 40000) added..\nHead: %d\nTail: %d\n", queue.first(), queue.last());
+		
+		
+		queue = (USE_ARRAY ? new ArrayQueue() : new LinkedQueue());
+		
+		queue.enqueue(1);
+		
+		Object o1 = queue.first();
+		Object o2 = queue.dequeue();
+		Object o3 = queue.first();
+		
+		System.out.printf("\nTesting 'first()':\nBefore: %s\nDequeue: %s\nAfter: %s", o1,o2,o3);
+		
+		
+		if (DEBUG && USE_ARRAY)
+		{
+			queue.enqueue(330);
+			queue.dequeue();
+			queue.dequeue();
+			
+			System.out.printf("\nHead: %d\nTail: %d\n", queue.first(), queue.last());
+			System.out.println(((ArrayQueue)queue).toDebugString()); // ArrayQueue-unique method
+			
+			for (int i = 0; i < 4; i++)
+				queue.enqueue(11);
+			
+			queue.enqueue(1000);
+			queue.enqueue(2000);
+			
+			System.out.println(queue);
+			System.out.println(((ArrayQueue)queue).toDebugString());
+			
+			queue.enqueue(3000);
+			
+			System.out.println(queue);
+			System.out.println(((ArrayQueue)queue).toDebugString());
+			System.out.printf("\nHead: %d\nTail: %d\n", queue.first(), queue.last());
+		}
 	}
 
 }

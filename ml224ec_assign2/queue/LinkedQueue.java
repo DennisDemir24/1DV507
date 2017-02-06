@@ -52,10 +52,7 @@ public class LinkedQueue implements Queue {
 	@Override
 	public Object dequeue() {
 		Object object = head.value();
-		if (head.hasNext() && size > 0)
-			head = head.next();
-		else 
-			head = tail;
+		head = head.next();
 		size--;
 		return object;
 	}
@@ -67,6 +64,8 @@ public class LinkedQueue implements Queue {
 	 */
 	@Override
 	public Object first() {
+		if (head == null)
+			return null;
 		return head.value();
 	}
 
@@ -77,6 +76,8 @@ public class LinkedQueue implements Queue {
 	 */
 	@Override
 	public Object last() {
+		if (tail == null)
+			return null;
 		return tail.value();
 	}
 
@@ -96,8 +97,9 @@ public class LinkedQueue implements Queue {
 	{
 		String text = "[ ";
 		Iterator<Object> it = iterator();
-		for (int i = 0; it.hasNext(); i++)
-			text += it.next() + (i < size() - 1 ? ", " : " ]");
+		while (it.hasNext())
+			text += it.next() + (it.hasNext() ? ", " : "");
+		text += " ]";
 		return text;
 	}
 	

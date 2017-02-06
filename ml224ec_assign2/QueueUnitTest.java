@@ -25,12 +25,6 @@ public class QueueUnitTest {
 		//targetClass = ArrayQueue.class; // change this to <ClassName>.class to test an other class
 	}
 	
-	/*
-	public QueueUnitTest(Class<Queue> targetClass) {
-		this.targetClass = targetClass;
-	}
-	*/
-	
 	public void setTestClass (Class c)
 	{
 		targetClass = c;
@@ -307,6 +301,8 @@ public class QueueUnitTest {
 						);
 		}
 	}
+	
+	// Helper functions below
 	
 	private Queue instantize()
 	{

@@ -1,0 +1,17 @@
+#upper-text, #center-text, #lower-text {
+	-fx-fill: white;
+	-fx-font-size: 20px;
+}
+
+#upper-box {
+	-fx-fill: black;
+	-fx-background-color: #211111;
+}
+#center-box
+{
+	-fx-background-color: #322222;
+}
+#lower-box
+{
+	-fx-background-color: #433333;	
+}

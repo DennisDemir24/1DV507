@@ -1,14 +1,9 @@
 package ml224ec_assign2;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import javafx.application.*;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;

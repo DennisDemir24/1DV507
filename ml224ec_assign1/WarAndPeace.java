@@ -25,46 +25,14 @@ public class WarAndPeace {
 				
 		Stream<String> stream = Arrays.stream(words);
 		
-		System.out.printf("Filtering unique words: (one dot = %d processed words)\n", WORDS_TO_ONE_DOT);
-		List<String> seen = new ArrayList<String>();
+		stream = stream.map(s -> 
+		s.toLowerCase()
+		.replaceAll("[^a-z-\']", "") // REGEX remove all non-alphabetic except dash and apostrophe
+				);
+		stream = stream.filter(s -> !s.isEmpty());
+		stream = stream.distinct();
 		
-		int uniqueWordCount = (int)stream.filter((string) -> 
-		// start predicate
-		{
-			wordCount++;
-			if (wordCount%WORDS_TO_ONE_DOT == 0)
-				System.out.print('.');
-			
-			if (DEBUG)
-				System.out.println(string);
-			
-			String str = string;
-			if (str == null)
-				return false;
-
-			str = str
-					.toLowerCase()
-					.replaceAll("[^a-z-\']", ""); // REGEX remove all non-alphabetic except dash and apostrophe
-			
-			if (!str.isEmpty())
-			{
-				if (!seen.contains(str))
-				{
-					seen.add(str);
-					if (DEBUG)
-						System.out.printf("Unique \'%s\'\n", str);
-					return true;
-				}
-				else if (DEBUG)
-					System.out.printf("Ignoring \'%s\' ('%s'): Seen\n", string, str);
-			}
-			else if (DEBUG)
-				System.out.printf("Ignoring '%s': Invaild\n", string);
-			return false;		
-		}
-		// end predicate
-		).count();
-		System.out.println("");
+		int uniqueWordCount = (int)stream.count();
 		
 		System.out.printf("Estimated count of unique words found: %d", uniqueWordCount);
 	}

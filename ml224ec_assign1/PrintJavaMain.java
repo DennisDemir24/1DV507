@@ -11,8 +11,7 @@ public class PrintJavaMain {
 	private static int depth = 0;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
 		Path targetDirectory = Paths.get(args[0]);
 		
 		printAllJavaFiles(targetDirectory.toFile());
@@ -45,10 +44,10 @@ public class PrintJavaMain {
 			}
 			catch (Exception e)
 			{
-				System.out.printf("Error reading %s in %s; %s", 
+				System.out.printf("Error reading %s in %s; %s\n", 
 						f.getName(),
 						directory.getName(),
-						e.getMessage());
+						e.toString());
 			}
 		}
 		
@@ -57,18 +56,24 @@ public class PrintJavaMain {
 	
 	private static void printJavaFileDetails(File file) throws IOException
 	{
-		int size = Files.readAllBytes(file.toPath()).length;
+		//int size = Files.readAllBytes(file.toPath()).length;
 		int lines = Files.readAllLines(file.toPath()).size();
 		
 		String space = "";
 		for (int i = 0; i < depth; i++)
 			space += " ";
 		
+		System.out.printf("%s%s (%d lines)\n",
+				space,
+				file.getName(),
+				lines);
+		/*
 		System.out.printf("%s%s (%d lines) (%d bytes)\n",
 				space,
 				file.getName(),
 				lines,
 				size);
+				*/
 	}
 	
 }

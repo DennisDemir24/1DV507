@@ -1,10 +1,6 @@
-package ml224ec_assign2;
+package ml224ec_assign2.queue;
 
 import java.util.Iterator;
-
-import ml224ec_assign2.queue.ArrayQueue;
-import ml224ec_assign2.queue.LinkedQueue;
-import ml224ec_assign2.queue.Queue;
 
 public class QueueMain {
 	

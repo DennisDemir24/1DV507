@@ -1,4 +1,4 @@
-package ml224ec_assign2;
+package ml224ec_assign2.queue;
 
 import static org.junit.Assert.*;
 
@@ -7,10 +7,6 @@ import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import ml224ec_assign2.queue.ArrayQueue;
-import ml224ec_assign2.queue.LinkedQueue;
-import ml224ec_assign2.queue.Queue;
 
 public class QueueUnitTest {
 	

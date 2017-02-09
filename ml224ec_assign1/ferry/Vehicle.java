@@ -11,18 +11,19 @@ public abstract class Vehicle implements Embarkable {
 	
 	public Vehicle()
 	{
-		populate();
 	}
 	
-	// fills the vehicle with passengers
-	protected void populate()
+	public boolean setPassengers(Passenger[] passengers)
 	{
-		int passengerCount = new Random().nextInt(maxPassengers) + 1;
-		
-		passengers = new Passenger[passengerCount];
-		
-		for (int i = 0; i < passengerCount; i++)
-			passengers[i] = new Passenger(this);
+		if (passengers.length > maxPassengers)
+			return false;
+		this.passengers = passengers;
+		return true;
+	}
+	
+	public int getMaxPassengers()
+	{
+		return maxPassengers;
 	}
 	
 	public int getPassengerCount()

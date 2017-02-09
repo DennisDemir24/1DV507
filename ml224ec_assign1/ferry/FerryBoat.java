@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 
 public class FerryBoat implements Ferry {
 
-	private static final int MAX_VEHICLE_SPACE = 80 * Car.BASE_SPACE_COST;
+	private static final int MAX_CARS = 40;
+	private static final int MAX_VEHICLE_SPACE = MAX_CARS * Car.BASE_SPACE_COST;
 	private static final int MAX_PASSENGER_SPACE = 200;
 	
 	private static final int VEHICLE_SPACE_THRESHOLD = (int)(MAX_VEHICLE_SPACE * 0.9);
@@ -129,7 +130,7 @@ public class FerryBoat implements Ferry {
 	public String toString()
 	{
 		String data = "Ship manifest\n"
-				+ String.format("Total vehicles: %d\nBicycles: %d\nCar: %d\nBuses: %d\nLorries: %d\n",
+				+ String.format("Total vehicles: %d\nBicycles: %d\nCars: %d\nBuses: %d\nLorries: %d\n",
 						vehicles.size(),
 						vehicles.stream().filter((v) -> {return v instanceof Bicycle;}).count(),
 						vehicles.stream().filter((v) -> {return v instanceof Car;}).count(),

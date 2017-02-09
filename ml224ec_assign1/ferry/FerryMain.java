@@ -1,4 +1,4 @@
-package ml224ec_assign1;
+package ml224ec_assign1.ferry;
 
 import java.util.Queue;
 import java.util.Random;
@@ -94,60 +94,75 @@ public class FerryMain {
 		
 		while (filled < embarkables)
 		{
+			Embarkable e = null;
 			switch (EmbarkableType.pick())
 			{
-			case PASSENGER:
-			{
-				if (passengerCount < MAX_STANDALONE_PASSENGERS)
+				case PASSENGER:
 				{
-					queue.add(new Passenger());
-					passengerCount++;
-					filled++;
+					if (passengerCount < MAX_STANDALONE_PASSENGERS)
+					{
+						e = new Passenger();
+						passengerCount++;
+					}
+					break;
 				}
-				break;
-			}
-			case BICYCLE:
-			{
-				if (bicycleCount < MAX_BICYCLES)
+				case BICYCLE:
 				{
-					queue.add(new Bicycle());
-					bicycleCount++;
-					filled++;
+					if (bicycleCount < MAX_BICYCLES)
+					{
+						e = new Bicycle();
+						bicycleCount++;
+					}
+					break;
 				}
-				break;
-			}
-			case CAR:
-			{
-				if (carCount < MAX_CARS)
+				case CAR:
 				{
-					queue.add(new Car());
-					carCount++;
-					filled++;
+					if (carCount < MAX_CARS)
+					{
+						e = new Car();
+						carCount++;
+					}
+					break;
 				}
-				break;
-			}
-			case BUS:
-			{
-				if (busCount < MAX_BUSES)
+				case BUS:
 				{
-					queue.add(new Bus());
-					busCount++;
-					filled++;
+					if (busCount < MAX_BUSES)
+					{
+						e = new Bus();
+						busCount++;
+					}
+					break;
 				}
-				break;
-			}
-			case LORRY:
-			{
-				if (lorryCount < MAX_LORRIES)
+				case LORRY:
 				{
-					queue.add(new Lorry());
-					lorryCount++;
-					filled++;
+					if (lorryCount < MAX_LORRIES)
+					{
+						e = new Lorry();
+						lorryCount++;
+					}
+					break;
 				}
-				break;
 			}
-			}
+			if (e == null) // Try again, <insert insult here>..
+				continue;
+			
+			if (e.isVehicle())
+				populateVehicle((Vehicle)e);
+			queue.add(e);
+			filled++;
 		}
 	}
 	
+	// fills the vehicle with passengers
+	private static void populateVehicle(Vehicle v)
+	{
+		int passengerCount = new Random().nextInt(v.getMaxPassengers()) + 1;
+		
+		Passenger[] passengers = new Passenger[passengerCount];
+		
+		for (int i = 0; i < passengerCount; i++)
+			passengers[i] = new Passenger(v);
+		
+		v.setPassengers(passengers);
+	}
 }

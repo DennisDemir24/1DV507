@@ -11,8 +11,6 @@ public class Car extends Vehicle {
 		baseCost = 100;
 		passengerCost = 15;
 		space = BASE_SPACE_COST;
-		
-		populate();
 	}
 	
 }

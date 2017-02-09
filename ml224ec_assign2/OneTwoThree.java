@@ -62,16 +62,15 @@ public class OneTwoThree extends Application {
 		
 		root.getChildren().addAll(grid);
 		
-		Scene scene = new Scene(root, 300,300);
+		Scene scene = new Scene(root);
 		
 		primaryStage.setTitle("One Two Three");
 		primaryStage.setScene(scene);
 		scene.getStylesheets().add(
 				"./ml224ec_assign2/onetwothree.css"
 				);
-		primaryStage.setMaxWidth(300);
-		primaryStage.setMaxHeight(320); // hack
 		primaryStage.setResizable(false); // No, no. no resizing.
+		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 	

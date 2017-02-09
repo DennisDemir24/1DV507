@@ -4,18 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class WarAndPeace {
-	
-	private static final boolean DEBUG = false;
-	
-	private static final int WORDS_TO_ONE_DOT = 10000;
-	private static int wordCount = 0;
 
 	public static void main(String[] args) {
 		

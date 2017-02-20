@@ -2,6 +2,11 @@ package ml224ec_assign2.queue;
 
 import java.util.Iterator;
 
+/**
+ * Implementation of Queue based on circular arrays.
+ * @author Martin Lyrå
+ *
+ */
 public class ArrayQueue implements Queue {
 
 	Object[] data = new Object[8];

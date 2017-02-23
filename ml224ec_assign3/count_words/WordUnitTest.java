@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * Unit test class for the class 'Word', not included in exercise, but necessary.
  * Also the first time I try applying anonymous functions to unit tests.
- * The design is wonky, but saves me time
+ * The design is wonky, but saves time
  * @author Martin Lyrå
  *
  */
@@ -21,6 +21,11 @@ public class WordUnitTest {
 	{
 		public abstract Integer compare(T first, T second);
 	}
+	
+	private interface IteratorLambda<T>
+	{
+		public abstract Object apply(T first, T second);
+	}
 
 	private static final String[] WORD_TEST_VALUES = {
 			"Wife", "wife", "lynx", "apple", "orange", "APPLE", "hello", "foo", "bar", "fOO"	
@@ -28,6 +33,10 @@ public class WordUnitTest {
 	
 	private static final Word[] TEST_WORDS = new Word[WORD_TEST_VALUES.length];
 	
+	/**
+	 * Sets up all the input values for testing.
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		for (int i = 0; i < WORD_TEST_VALUES.length; i++)
@@ -74,6 +83,10 @@ public class WordUnitTest {
 	
 	// internal functions
 	
+	/**
+	 * Expects the result to be true, else it throws <code>AssertionError</code> on failure.
+	 * @param predicate
+	 */
 	private void forEachExpect(BiPredicate<Word, String> predicate)
 	{
 		for (int i = 0; i < WORD_TEST_VALUES.length; i++)
@@ -93,31 +106,41 @@ public class WordUnitTest {
 
 	private void forEachTestEquality(BiPredicate<Word, Word> predicate)
 	{
-		int len = WORD_TEST_VALUES.length;
-		for (int i = 0; i < len; i++)
-		{
-			Word w1 = TEST_WORDS[i];
-			
-			for (int j = 0; j < len; j++)
-			{
-				Word w2 = TEST_WORDS[j];
-				
-				boolean result = predicate.test(w1, w2);
-				
-				// as long they are actually not the same instance, consider each false a success
-				if (i != j) 
-					result = !result;
-				
-				if (!result)
-					fail (
-							String.format("Sample %d - Equality test failed for '%s' against '%s' (Sample %d)\nHashes:\n%d -> %d\n%d -> %d",
-									i + 1, w1, w2, j + 1, i+1, w1.hashCode(), j+1, w2.hashCode())
-							);
-			}
-		}
+		forEachEquals(
+				(Word first, Word second) -> {
+						return predicate.test(first, second);
+					},
+				(String first, String second) -> {
+						return first.equals(second);
+					}
+				);
 	}
 	
 	private void forEachCompare (ComparisonLambda<Word> comparison)
+	{
+		forEachEquals(
+				(Word first, Word second) -> {
+						return comparison.compare(first, second);
+					},
+				(String first, String second) -> {
+						return first.compareTo(second);
+					}
+				);
+	}
+	
+	/**
+	 * Boilerplate equality function for handling non-special tests with fair complexity. 
+	 * It tests the input values and then compares them to the values returned by the class test.
+	 * If both have given the same result, then it is considered a success.
+	 * Throws <code>AssertionError</code> when the results are not equal.
+	 * 
+	 * @param wordPredicate
+	 * @param expectPredicate
+	 */
+	
+	private void forEachEquals (
+			IteratorLambda<Word> wordPredicate,
+			IteratorLambda<String> expectPredicate)
 	{
 		int len = WORD_TEST_VALUES.length;
 		for (int i = 0; i < len; i++)
@@ -130,14 +153,14 @@ public class WordUnitTest {
 				Word w2 = TEST_WORDS[j];
 				String s2 = WORD_TEST_VALUES[j].toLowerCase();
 				
-				int expected = s1.compareTo(s2);
-				int result = comparison.compare(w1, w2);
+				Object expected = expectPredicate.apply(s1, s2);
+				Object result = wordPredicate.apply(w1, w2);
 				
 				boolean areEqual = expected == result;
 				
 				if (!areEqual)
 					fail (
-							String.format("Sample %d - Comparsion test failed for '%s' against '%s' (Sample %d)\nComparisons:\nExpected: %d\nGot: -> %d",
+							String.format("Sample %d - Comparsion test failed for '%s' against '%s' (Sample %d)\nResults:\nExpected: %d\nGot: -> %d",
 									i + 1, w1, w2, j + 1, i+1, expected, j+1, result)
 							);
 			}

@@ -16,17 +16,24 @@ public class Word implements Comparable<Word>
 	
 	public int hashCode()
 	{
-		int hash = 16;
-		hash += super.hashCode(); // get Object's hashcode()
-		hash *= 5  + word.hashCode();
-		hash += 12 + word.hashCode();
-		hash += 9  + (word.length() == 0 ? hash%16 : word.charAt(0)); // add modulus 16 of hash if the word contains nothing, else the first letter of the word
+		/*int hash = 16;
+		
+		for (char c : word.toCharArray())
+			hash += c;*/
+		
+		//hash += super.hashCode(); // get Object's hashcode()
+		//hash *= 5  + word.hashCode();
+		//hash += 9  + (word.length() == 0 ? hash%16 : word.charAt(0)); // add modulus 16 of hash if the word contains nothing, else the first letter of the word
+		
+		int hash = word.hashCode();
 		return hash;
 	}
 	
 	public boolean equals(Object other)
 	{
-		return hashCode() == other.hashCode();
+		if (other instanceof Word)
+			return hashCode() == other.hashCode();
+		return false;
 	}
 	
 	@Override

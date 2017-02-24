@@ -30,9 +30,7 @@ public class BouncyBall extends Circle {
 		return v;
 	}
 	
-	// ISSUE: Balls may clip inside the boundaries due to the lack of predictable collision check
-	// and if there would be a check for that, I'd have to add extra code to move the ball *after*
-	// collision under the same tick. It is something I don't want to do now - sorry!
+	// ISSUE: This is black magic
 	public void update()
 	{
 		// fetch position data
@@ -105,7 +103,7 @@ public class BouncyBall extends Circle {
 	// No distance or position prediction for this one, PLEASE!
 	// (Too much mathematics)
 	//
-	// This has been written in a fashion where the balls' momentum/velocity will always be constant.
+	// This is written in a fashion where the balls' momentum/velocity will always be constant.
 	public void handleCollision(BouncyBall other)
 	{
 		double distance = Math.sqrt(

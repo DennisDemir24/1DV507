@@ -2,10 +2,8 @@ package ml224ec_assign3.bouncy_balls;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Bounds;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 public class BouncyBallCanvas extends Canvas {
@@ -31,6 +29,7 @@ public class BouncyBallCanvas extends Canvas {
 	
 	public void updateAndAnimate()
 	{
+		// Get the context and start a new frame
 		GraphicsContext gc = this.getGraphicsContext2D();
 		gc.clearRect(0, 0, this.getHeight(), this.getWidth());
 		
@@ -45,6 +44,7 @@ public class BouncyBallCanvas extends Canvas {
 			ball.setBoundaries(this.getWidth(), this.getHeight());
 			ball.update();
 			
+			// Draw the balls on the canvas
 			gc.setFill(ball.getFill());
 			gc.fillOval(ball.getX(), ball.getY(), ball.getRadius()*2, ball.getRadius()*2);
 		}

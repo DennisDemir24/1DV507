@@ -3,3 +3,16 @@
 /WordUnitTest.class
 /WordUnitTest$ComparisonLamba.class
 /WordUnitTest$ComparisonLambda.class
+/WordCount1Main.class
+/WordSet.class
+/WordUnitTest$SelectorLambda.class
+/WordUnitTest$IteratorLambda.class
+/WordCount2Main.class
+/HashWordSet.class
+/TreeWordSet.class
+/HashWordSet$HashNode.class
+/TreeWordSet$BinaryTreeNode.class
+/TreeWordSet$BinaryTreeIterator.class
+/HashWordSet$HashBucketIterator.class
+/HashWordSet$BucketChainIterator.class
+/HashWordSet$HashNodeIterator.class

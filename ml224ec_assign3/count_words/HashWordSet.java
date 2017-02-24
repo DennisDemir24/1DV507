@@ -13,7 +13,7 @@ public class HashWordSet implements WordSet {
 		}
 	}
 	
-	private class HashBucketIterator<T extends Object> implements Iterator<T>
+	private class HashNodeIterator<T extends Object> implements Iterator<T>
 	{
 		private final HashNode<T>[] buckets;
 		private final int size;
@@ -22,7 +22,7 @@ public class HashWordSet implements WordSet {
 		private int bucketIndex;
 		private HashNode<T> currentNode;
 		
-		public HashBucketIterator(HashNode<T>[] data, int size)
+		public HashNodeIterator(HashNode<T>[] data, int size)
 		{
 			this.size = size;
 			buckets = data;
@@ -70,7 +70,7 @@ public class HashWordSet implements WordSet {
 	
 	@Override
 	public Iterator<Word> iterator() {
-		return new HashBucketIterator<Word>(data, size);
+		return new HashNodeIterator<Word>(data, size);
 	}
 
 	@Override

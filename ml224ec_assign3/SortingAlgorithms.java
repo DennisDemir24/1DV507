@@ -24,6 +24,17 @@ public class SortingAlgorithms {
 		return out;
 	}
 	
+	// Algothrim based on https://gist.github.com/codeblocks/898596
+	// This comment below is copied directly from the source file provided above
+	/*
+	 * Divide  : Divide the n-element array into two n/2-element
+	 *           sub-arrays
+	 * Conquer : Sort the two sub-arrays recursively using
+	 *           merge sort
+	 * Combine : Merge the two sorted subsequences to form the
+	 *           sorted array
+	 */
+	// These words will be 
 	public static int[] mergeSort(int[] in)
 	{
 		int[] out = in.clone();
@@ -41,11 +52,13 @@ public class SortingAlgorithms {
 		{
 			middle = (start + end)/2;
 			
-			// recursive part
-			mergeSort(in, start, middle);
-			mergeSort(in, middle + 1, end);
+			// (Divide & Conquer)
+			// recursive part 
+			mergeSort(in, start, middle); // left hand part
+			mergeSort(in, middle + 1, end); // right hand part
 			
-			// do the actual sorting
+			// (Combine)
+			// do the actual sorting 
 			merge(in, start, middle, end);
 		}
 	}
@@ -53,36 +66,36 @@ public class SortingAlgorithms {
 	private static void merge(int[] in, int start, int middle, int end)
 	{	
 		int[] data = in.clone();// work copy
-		int i = start;			// left hand index
-		int j = (middle + 1);	// right hand index
+		int lhi = start;		// left hand index
+		int rhi = (middle + 1);	// right hand index
 		int k = start;			// actual data index
 		
-		while ((i <= middle || j <= end) && k < end)
+		while ((lhi <= middle || rhi <= end) && k < end)
 		{
-			int x = 0; // left hand value
-			int y = 0; // right hand value
+			int lhv = 0; // left hand value
+			int rhv = 0; // right hand value
 			
-			if (i <= middle)
-				x = data[i];
+			if (lhi <= middle)
+				lhv = data[lhi];
 			else
-				x = data[j+1]; // use the right hand instead
+				lhv = data[rhi+1]; // use the right hand instead
 			
-			if (j <= end)
-				y = data[j];
+			if (rhi <= end)
+				rhv = data[rhi];
 			else
-				y = data[i+1]; // use the left hand instead
+				rhv = data[lhi+1]; // use the left hand instead
 			
-			if (x > y) // is left hand [value] greater than right hand [value]?
+			if (lhv > rhv) // is left hand [value] greater than right hand [value]?
 			{
-				in[k] = y;
-				in[k + 1] = x; // put the loser at the space to right, it will be replaced at the next iteration anyway
-				j++;
+				in[k] = rhv; 		// lhv is winner
+				in[k + 1] = lhv; 	// put the winner at the space to right, it will be investigated at the next iteration anyway
+				rhi++;
 			}
-			else
+			else // left hand value is weaker to right hand value - rhv is winner
 			{
-				in[k] = x;
-				in[k + 1] = y;
-				i++;
+				in[k] = lhv;		// rhv is winner
+				in[k + 1] = rhv; 	// same here
+				lhi++;
 			}
 			k++;
 		}
@@ -125,11 +138,13 @@ public class SortingAlgorithms {
 		{
 			middle = (start + end)/2;
 			
-			// recursive part
-			mergeSort(in, c, start, middle);
-			mergeSort(in, c, middle + 1, end);
+			// (Divide & Conquer)
+			// recursive part 
+			mergeSort(in, c, start, middle); // left hand part
+			mergeSort(in, c, middle + 1, end); // right hand part
 			
-			// do the actual sorting
+			// (Combine)
+			// do the actual sorting 
 			merge(in, c, start, middle, end);
 		}
 	}
@@ -137,36 +152,38 @@ public class SortingAlgorithms {
 	private static void merge(String[] in, Comparator<String> c, int start, int middle, int end)
 	{	
 		String[] data = in.clone();// work copy
-		int i = start;			// left hand index
-		int j = (middle + 1);	// right hand index
+		int lhi = start;		// left hand index
+		int rhi = (middle + 1);	// right hand index
 		int k = start;			// actual data index
 		
-		while ((i <= middle || j <= end) && k < end)
+		while ((lhi <= middle || rhi <= end) && k < end)
 		{
-			String x = ""; // left hand value
-			String y = ""; // right hand value
+			String lhv = ""; // left hand value
+			String rhv = ""; // right hand value
 			
-			if (i <= middle)
-				x = data[i];
+			if (lhi <= middle) 
+				lhv = data[lhi];
 			else
-				x = data[j+1]; // use the right hand instead
+				lhv = data[rhi+1]; // use the right hand instead
 			
-			if (j <= end)
-				y = data[j];
+			if (rhi <= end)
+				rhv = data[rhi];
 			else
-				y = data[i+1]; // use the left hand instead
+				rhv = data[lhi+1]; // use the left hand instead
 			
-			if (c.compare(x, y) > 0) 	// is x more or less different to y according to Comparator c?
-			{							// 0 = equal
-				in[k] = y;
-				in[k + 1] = x; // put the loser at the space to right, it will be replaced at the next iteration anyway
-				j++;
+			// is x more or less different to y according to Comparator c?
+			// 0 = equal
+			if (c.compare(lhv, rhv) > 0) 
+			{							
+				in[k] = rhv; 		// lhv is winner
+				in[k + 1] = lhv; 	// put the winner at the space to right, it will be investigated at the next iteration anyway
+				rhi++;
 			}
-			else
+			else // left hand value is weaker to right hand value - rhv is winner
 			{
-				in[k] = x;
-				in[k + 1] = y;
-				i++;
+				in[k] = lhv;		// rhv is winner
+				in[k + 1] = rhv; 	// same here
+				lhi++;
 			}
 			k++;
 		}

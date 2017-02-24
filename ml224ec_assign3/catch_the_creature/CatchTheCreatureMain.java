@@ -5,9 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class CatchTheCreatureMain extends Application {
@@ -23,7 +21,7 @@ public class CatchTheCreatureMain extends Application {
 	}
 
 	@Override
-	public void start(Stage arg0) throws Exception {
+	public void start(Stage stage) throws Exception {
 	
 		countLabel = new Label("Times caught: 0");
 		countLabel.setMaxWidth(200);
@@ -49,12 +47,12 @@ public class CatchTheCreatureMain extends Application {
 		
 		Scene scene = new Scene(root);
 		
-		arg0.setTitle("Catch the Bug!");
-		arg0.setScene(scene);
-		arg0.setResizable(false);
-		arg0.sizeToScene();
+		stage.setTitle("Catch the Bug!");
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.sizeToScene();
 		
-		arg0.show();
+		stage.show();
 	}
 
 	private void updateCount()

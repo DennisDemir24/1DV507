@@ -1,7 +1,5 @@
 package ml224ec_assign3.histogram_revisited;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -33,8 +31,8 @@ public class HistogramApplication extends Application {
 	}
 
 	@Override
-	public void start(Stage arg0) throws Exception {
-		currentStage = arg0;
+	public void start(Stage stage) throws Exception {
+		currentStage = stage;
 		
 		BorderPane root = new BorderPane();
 		

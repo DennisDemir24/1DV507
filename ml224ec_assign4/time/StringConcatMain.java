@@ -26,14 +26,10 @@ public class StringConcatMain {
 		}
 	}
 	
-	static char[] referenceString = "abcdefghijklmnopqrstuvwxzy".toCharArray();
+	private static char[] referenceString = "abcdefghijklmnopqrstuvwxzy".toCharArray();
 	
-	static List<String> shortStrings;
-	static List<String> longStrings;
-	
-	static long timerStartTimeStamp;
-	static long timerLastTimeStamp;
-	
+	private static List<String> shortStrings;
+	private static List<String> longStrings;
 
 	public static void main(String[] args)
 	{
@@ -44,7 +40,7 @@ public class StringConcatMain {
 		int totalConcatsShortBuilder = 0;
 		int totalConcatsLongBuilder = 0;
 		
-		System.out.printf("Perfomring %d runs of four different tests, estimated time until completion: %d seconds.\n", TEST_REPEAT_COUNT, 4 * TEST_REPEAT_COUNT);
+		System.out.printf("Performing %d runs of four different tests, estimated time until completion: %d seconds.\n", TEST_REPEAT_COUNT, 4 * TEST_REPEAT_COUNT);
 		for (int i = 0; i < TEST_REPEAT_COUNT; i++)
 		{
 			totalConcatsShortOp += operatorConcats(StringLengthMode.SHORT);
@@ -81,15 +77,15 @@ public class StringConcatMain {
 		String receiver = "";
 		String str = getList(mode).get(0);
 		
-		timerStartTimeStamp = getCurrentTime();
-		while (AVERAGE_TIME_LIMIT > getCurrentTime() - timerStartTimeStamp)
+		long startTimeStamp = getCurrentTime();
+		while (AVERAGE_TIME_LIMIT > getCurrentTime() - startTimeStamp)
 			receiver += str;
 		
 		return receiver.length()/str.length();
 	}
 	
 	/**
-	 * Executes string concatenation using Stringbuilder with a bad case approach; appending a string and then building it in one cycle.
+	 * Executes string concatenation using StringBuilder with a bad case approach; appending a string and then building it in one cycle.
 	 * Repeats the cycle until at least one second has elapsed.
 	 * @param mode
 	 * @return Amount of concatenations done within an estimate of one second
@@ -100,8 +96,8 @@ public class StringConcatMain {
 		String str = getList(mode).get(0);
 		
 		int concats = 0;
-		timerStartTimeStamp = getCurrentTime();
-		while (AVERAGE_TIME_LIMIT > getCurrentTime() - timerStartTimeStamp)
+		long startTimeStamp = getCurrentTime();
+		while (AVERAGE_TIME_LIMIT > getCurrentTime() - startTimeStamp)
 		{
 			builder.append(str);
 			builder.toString();

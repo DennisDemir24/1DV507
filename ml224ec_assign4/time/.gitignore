@@ -2,3 +2,9 @@
 /StringConcatMain$STRING_LENGTH.class
 /StringConcatMain$StringLength.class
 /StringConcatMain$StringLengthMode.class
+/SortingTimeMain.class
+/SortingTimeMain$TargetType.class
+/SortingAlgorithms.class
+/SortingTimeMain$SortFunction.class
+/SortingTimeMain$IntegerSortFunction.class
+/SortingTimeMain$StringSortFunction.class

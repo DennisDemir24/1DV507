@@ -45,13 +45,13 @@ public class SortingTimeMain {
 		System.out.printf("\nPerforming %d runs of four different tests, estimated time until completion: %d seconds.\n", TEST_REPEAT_COUNT, 4 * TEST_REPEAT_COUNT);
 		for (int i = 0; i < TEST_REPEAT_COUNT; i++)
 		{
-			totalSortedInsertInteger += insertSorted(TargetType.INTEGER);
+			totalSortedInsertInteger += doInsertSorting(TargetType.INTEGER);
 			System.out.print('.');
-			totalSortedInsertString += insertSorted(TargetType.STRING);
+			totalSortedInsertString += doInsertSorting(TargetType.STRING);
 			System.out.print('.');
-			totalSortedMergeInteger += mergeSorted(TargetType.INTEGER);
+			totalSortedMergeInteger += doMergeSorting(TargetType.INTEGER);
 			System.out.print('.');
-			totalSortedMergeString += mergeSorted(TargetType.STRING);
+			totalSortedMergeString += doMergeSorting(TargetType.STRING);
 			System.out.print('.');
 		}
 		System.out.print('\n');
@@ -75,7 +75,7 @@ public class SortingTimeMain {
 	
 	}
 	
-	private static int insertSorted(final TargetType type)
+	private static int doInsertSorting(final TargetType type)
 	{
 		return testSortMethod(type,
 				(int[] arr) 
@@ -85,7 +85,7 @@ public class SortingTimeMain {
 				);
 	}
 	
-	private static int mergeSorted(final TargetType type)
+	private static int doMergeSorting(final TargetType type)
 	{
 		return testSortMethod(type,
 				(int[] arr) 

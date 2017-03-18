@@ -5,6 +5,25 @@ import java.util.List;
 
 public class StringConcatMain {
 
+	/**
+	 * This class breaks the class design for two reasons:
+	 * <li>Internal nested class</li>
+	 * <li>It is supposed to be a struct</li>
+	 * @author Martin Lyrå
+	 *
+	 */
+	private static class TestResult {
+		
+		public int concats;
+		public int strlen;
+		
+		public TestResult(int concats, int strlen)
+		{
+			this.concats = concats;
+			this.strlen = strlen;
+		}
+	}
+	
 	private static final boolean USE_NANOSECS = true;
 	
 	private static final long SECOND_IN_MS = 1000;
@@ -40,16 +59,29 @@ public class StringConcatMain {
 		int totalConcatsShortBuilder = 0;
 		int totalConcatsLongBuilder = 0;
 		
+		int totalStringLength1 = 0;
+		int totalStringLength2 = 0;
+		int totalStringLength3 = 0;
+		int totalStringLength4 = 0;
+		
 		System.out.printf("Performing %d runs of four different tests, estimated time until completion: %d seconds.\n", TEST_REPEAT_COUNT, 4 * TEST_REPEAT_COUNT);
 		for (int i = 0; i < TEST_REPEAT_COUNT; i++)
 		{
-			totalConcatsShortOp += operatorConcats(StringLengthMode.SHORT);
+			TestResult t1 = operatorConcats(StringLengthMode.SHORT);
+			totalConcatsShortOp += t1.concats;
+			totalStringLength1 += t1.strlen;
 			System.out.print('.');
-			totalConcatsLongOp += operatorConcats(StringLengthMode.LONG);
+			TestResult t2 =	operatorConcats(StringLengthMode.LONG);
+			totalConcatsLongOp += t2.concats;
+			totalStringLength2 += t2.strlen;
 			System.out.print('.');
-			totalConcatsShortBuilder += builderConcats(StringLengthMode.SHORT);
+			TestResult t3 = builderConcats(StringLengthMode.SHORT);
+			totalConcatsShortBuilder += t3.concats;
+			totalStringLength3 += t3.strlen;
 			System.out.print('.');
-			totalConcatsLongBuilder += builderConcats(StringLengthMode.LONG);
+			TestResult t4 =	builderConcats(StringLengthMode.LONG);
+			totalConcatsLongBuilder += t4.concats;
+			totalStringLength4 += t4.strlen;
 			System.out.print('.');
 		}
 		System.out.print('\n');
@@ -59,20 +91,25 @@ public class StringConcatMain {
 		int averageConcatsShortBuilder = totalConcatsShortBuilder/TEST_REPEAT_COUNT;
 		int averageConcatsLongBuilder = totalConcatsLongBuilder/TEST_REPEAT_COUNT;
 		
-		System.out.println("Tests done!\nAverage concats per second, per approach:");
-		System.out.printf("Operator, short: %d concats/s\n", averageConcatsShortOp);
-		System.out.printf("Operator, long: %d concats/s\n", averageConcatsLongOp);
-		System.out.printf("Append (StringBuilder), short: %d concats/s\n", averageConcatsShortBuilder);
-		System.out.printf("Append (StringBuilder), long: %d concats/s\n", averageConcatsLongBuilder);
+		int averageStringLength1 = totalStringLength1/TEST_REPEAT_COUNT;
+		int averageStringLength2 = totalStringLength2/TEST_REPEAT_COUNT;
+		int averageStringLength3 = totalStringLength3/TEST_REPEAT_COUNT;
+		int averageStringLength4 = totalStringLength4/TEST_REPEAT_COUNT;
+		
+		System.out.println("Tests done!\nPer approach: Average concats per second, average final string length");
+		System.out.printf("Operator, short: %d concats/s, %d chars\n", averageConcatsShortOp, averageStringLength1);
+		System.out.printf("Operator, long: %d concats/s, %d chars\n", averageConcatsLongOp, averageStringLength2);
+		System.out.printf("Append (StringBuilder), short: %d concats/s, %d chars\n", averageConcatsShortBuilder, averageStringLength3);
+		System.out.printf("Append (StringBuilder), long: %d concats/s, %d chars\n", averageConcatsLongBuilder, averageStringLength4);
 	}
 	
 	/**
 	 * Executes string concatenation using the plus operator. Running one concatenation per cycle.
 	 * The cycle is repeated until at least one second has elapsed.
 	 * @param mode
-	 * @return Amount of concatenations done within an estimate of one second
+	 * @return Results of the test containing concatenations per second and the final string length
 	 */
-	private static int operatorConcats(StringLengthMode mode)
+	private static TestResult operatorConcats(StringLengthMode mode)
 	{
 		String receiver = "";
 		String str = getList(mode).get(0);
@@ -81,30 +118,29 @@ public class StringConcatMain {
 		while (AVERAGE_TIME_LIMIT > getCurrentTime() - startTimeStamp)
 			receiver += str;
 		
-		return receiver.length()/str.length();
+		return new TestResult(receiver.length()/str.length(), receiver.length());
 	}
 	
 	/**
 	 * Executes string concatenation using StringBuilder with a bad case approach; appending a string and then building it in one cycle.
 	 * Repeats the cycle until at least one second has elapsed.
 	 * @param mode
-	 * @return Amount of concatenations done within an estimate of one second
+	 * @return Results of the test containing concatenations per second and the final string length
 	 */
-	private static int builderConcats(StringLengthMode mode)
+	private static TestResult builderConcats(StringLengthMode mode)
 	{
 		StringBuilder builder = new StringBuilder();
+		String rec = "";
 		String str = getList(mode).get(0);
 		
-		int concats = 0;
 		long startTimeStamp = getCurrentTime();
 		while (AVERAGE_TIME_LIMIT > getCurrentTime() - startTimeStamp)
 		{
 			builder.append(str);
-			builder.toString();
-			concats++;
+			rec = builder.toString();
 		}
 		
-		return concats;
+		return new TestResult(rec.length()/str.length(), rec.length());
 	}
 	
 	private static long getCurrentTime()
